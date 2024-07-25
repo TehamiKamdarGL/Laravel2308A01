@@ -14,6 +14,8 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+
+//---------Website Routes----------
 Route::get('/', function () {
     return view('website.index');
 });
@@ -26,30 +28,26 @@ Route::get('/about', function(){
     return view('website.about');
 });
 
-Route::get('/blog-details', function(){
-    return view('website.blog-details');
+Route::get('/booking', function(){
+    return view('website.booking');
 });
-Route::get('/blog', function(){
-    return view('website.blog');
-});
-
-Route::get('/project-details', function(){
-    return view('website.project-details');
-});
-Route::get('/projects', function(){
-    return view('website.projects');
+Route::get('/menu', function(){
+    return view('website.menu');
 });
 
-Route::get('/service-details', function(){
-    return view('website.service-details');
+Route::get('/service', function(){
+    return view('website.service');
 });
-Route::get('/services', function(){
-    return view('website.services');
+Route::get('/team', function(){
+    return view('website.team');
 });
 
-Route::get('/admin1', function(){
-    return view('admin.index');
+Route::get('/testimonials', function(){
+    return view('website.testimonials');
 });
+
+
+
 
 // Route::get('/admin', [AdminController::class , 'index']);
 
@@ -59,7 +57,17 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        
+        if(Auth::User()->role==1){
+            return view('website.index');
+            }
+            else{
+            return view('admin.index');
+            }
+            
     })->name('dashboard');
 });
 
+//---------Admin Routes----------
+Route::get('/insertproduct', [AdminController::class, 'insertproduct']);
+Route::get('/insert', [AdminController::class, 'insert']);
